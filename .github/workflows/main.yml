@@ -20,4 +20,4 @@ jobs:
       run: cmake --build . --target tests
 
     - name: Run
-      run: ./tests
+      run: tests
