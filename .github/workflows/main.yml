@@ -16,5 +16,8 @@ jobs:
     - name: Generate build system
       run: cmake .
 
-    - name: Build on ${{ matrix.os }}
-      run: make perfect-hash
+    - name: Build
+      run: cmake --build . --target tests
+
+    - name: Run
+      run: ./tests

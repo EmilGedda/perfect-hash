@@ -1,5 +1,6 @@
 .vs/
 bin/
+out/
 CMakeCache.txt
 CMakeFiles
 CMakeScripts
