@@ -20,4 +20,9 @@ jobs:
       run: cmake --build . --target tests
 
     - name: Run
-      run: tests
+      run: ./tests
+      if: matrix.os != 'windows-latest'
+
+    - name: Run
+      run: tests.exe
+      if: matrix.os == 'windows-latest'
