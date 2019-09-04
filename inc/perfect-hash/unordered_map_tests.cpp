@@ -3,6 +3,8 @@
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include <doctest.h>
+#include <array>
+#include <utility>
 
 #include "unordered_map.hpp"
 
@@ -16,8 +18,12 @@ struct counting_hash {
 
 TEST_CASE("unordered_map creation") {
 
-  constexpr std::initializer_list<std::pair<const char, int>> init{
-      {'1', 1}, {'2', 2}, {'3', 3}, {'4', 4}, {'5', 5}
+  constexpr std::array<std::pair<char, int>, 5> init = { 
+    std::pair{'1', 1},
+    {'2', 2}, 
+    {'3', 3},
+    {'4', 4},
+    {'5', 5} 
   };
 
   constexpr auto table = perfecthash::universal::unordered_map<char, int, counting_hash, 5>(init);

@@ -53,7 +53,8 @@ namespace perfecthash {
         int seed = 0;
 
       public:
-        explicit constexpr unordered_map(const std::initializer_list<value_type>& values)
+        template<typename Container>
+        explicit constexpr unordered_map(const Container& values)
           : seed(unique_seed(values.begin(), values.end())), array() {
           auto i = 0;
           for (const auto& value : values) {
