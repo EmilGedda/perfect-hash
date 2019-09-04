@@ -17,12 +17,12 @@ jobs:
       run: cmake .
 
     - name: Build
-      run: cmake --build . --target tests
+      run: cmake --build . --target tests -D CMAKE_BUILD_TYPE=MinSizeRel
 
-    - name: Run
+    - name: Run (UNIX)
       run: ./tests
       if: matrix.os != 'windows-latest'
 
-    - name: Run
-      run: Debug\tests.exe
+    - name: Run (Windows)
+      run: Release\tests.exe
       if: matrix.os == 'windows-latest'

@@ -3,7 +3,7 @@ find_package(Git REQUIRED)
 
 ExternalProject_Add(
     projdoctest
-   # PREFIX ${CMAKE_BINARY_DIR}/doctest
+    PREFIX ${CMAKE_BINARY_DIR}/doctest
     GIT_REPOSITORY https://github.com/onqtam/doctest.git
     TIMEOUT 10
     UPDATE_COMMAND ${GIT_EXECUTABLE} pull
@@ -19,4 +19,5 @@ set(DOCTEST_INCLUDE_DIR ${source_dir}/doctest CACHE INTERNAL "Path to include fo
 add_library(doctest INTERFACE)
 
 add_dependencies(doctest projdoctest)
+target_compile_features(doctest INTERFACE cxx_std_17)
 target_include_directories(doctest INTERFACE ${DOCTEST_INCLUDE_DIR})

@@ -6,25 +6,21 @@
 
 #include "unordered_map.hpp"
 
-int seed = 0;
-
 struct counting_hash {
-  counting_hash(int) { }
-  template<typename T>
-  int operator()(const T&) { return seed++; }
+  explicit constexpr counting_hash(int) { }
 
-  static void reset() { seed = 0; }
+  constexpr int operator()(const char& c) { 
+    return c - '1';
+  }
 };
 
 TEST_CASE("unordered_map creation") {
 
-  auto init = std::initializer_list<std::pair<const char, int>>{
+  constexpr auto init = std::initializer_list<std::pair<const char, int>>{
       {'1', 1}, {'2', 2}, {'3', 3}, {'4', 4}, {'5', 5}
   };
 
-  auto table = perfecthash::universal::unordered_map<char, int, counting_hash, 5>(init);
-
-  counting_hash::reset();
+  constexpr auto table = perfecthash::universal::unordered_map<char, int, counting_hash, 5>(init);
 
   for (auto& pair : init)
     CHECK(table[pair.first] == pair.second);
