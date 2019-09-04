@@ -16,7 +16,7 @@ struct counting_hash {
 
 TEST_CASE("unordered_map creation") {
 
-  constexpr auto init = std::initializer_list<std::pair<const char, int>>{
+  constexpr std::initializer_list<std::pair<const char, int>> init{
       {'1', 1}, {'2', 2}, {'3', 3}, {'4', 4}, {'5', 5}
   };
 
