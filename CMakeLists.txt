@@ -2,6 +2,10 @@
 
 project("perfect-hash")
 
+if(NOT CMAKE_BUILD_TYPE) 
+    set(CMAKE_BUILD_TYPE MinSizeRel)
+endif()
+
 include("cmake/Doctest.cmake")
 
 add_executable(perfect-hash "src/main.cpp")
