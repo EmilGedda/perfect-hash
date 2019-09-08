@@ -28,7 +28,7 @@ jobs:
         echo Updating apt... 
         sudo apt-get update > /dev/null 2>&1
         echo Installing coverage tools...
-        sudo apt-get install lcov llvm-8 -y -qq > /dev/null 2>&1
+        sudo apt-get install lcov llvm -y -qq > /dev/null 2>&1
         echo #!/bin/bash > llvm-gcov.sh
         echo exec llvm-cov gcov \"$@\" > llvm-gcov.sh
         sudo install llvm-gcov.sh /usr/bin
@@ -39,7 +39,6 @@ jobs:
         echo Running lcov with coverage tool $(echo $COV | cut -f1 -d' ')
         lcov --gcov-tool $COV --directory . --capture --output-file coverage.info
         lcov --remove coverage.info 'doctest/*' '/usr/*' "${HOME}"'/.cache/*' --output-file coverage.info
-        lcov --gcov-tool $COV --list coverage.info
         bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
       env:
         CODECOV_TOKEN: 541a3b5e-4f2f-436d-a38b-8309f5819e9c
