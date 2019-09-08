@@ -22,4 +22,5 @@ target_link_libraries(tests
 
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Coverage")
     target_compile_options(tests PRIVATE -O0 -g --coverage)
+    target_link_options(tests PRIVATE --coverage)
 endif()
