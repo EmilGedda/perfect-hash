@@ -25,10 +25,23 @@ jobs:
 
     - name: Coverage
       run: |
-        sudo apt-get update
-        sudo apt-get install lcov -y -qq
+        echo Updating apt... 
+        sudo apt-get update > /dev/null
+        echo Installing coverage tools...
+        sudo apt-get install lcov llvm-cov -y -qq > /dev/null
+        cat > llvm-gcov <<EOF
+            #!/bin/bash
+            exec llvm-cov gcov "$@"
+        EOF 
+        chmod +x llvm-gcov
+        COV=gcov
+        if ["${{ matrix.cxx }}" = "clang++"]; then
+            COV=llvm-gcov
+        fi
         lcov --directory . --capture --output-file coverage.info
-        lcov --remove coverage.info '/usr/*' "${HOME}"'/.cache/*' --output-file coverage.info
+        lcov --remove coverage.info '/usr/*' "${HOME}"'/.cache/*' \
+             --output-file coverage.info \
+             --gcov-tool $COV
         lcov --list coverage.info
         bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
       env:
