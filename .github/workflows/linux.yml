@@ -26,13 +26,13 @@ jobs:
     - name: Coverage
       run: |
         echo Updating apt... 
-        sudo apt-get update > /dev/null
+        sudo apt-get update > /dev/null 2>&1
         echo Installing coverage tools...
-        sudo apt-get install lcov llvm-8 -y -qq > /dev/null
+        sudo apt-get install lcov llvm-8 -y -qq > /dev/null 2>&1
         cat > llvm-gcov <<EOF
             #!/bin/bash
             exec llvm-cov gcov "$@"
-        EOF 
+EOF # no indent here is intentional
         chmod +x llvm-gcov
         COV=gcov
         if ["${{ matrix.cxx }}" = "clang++"]; then
