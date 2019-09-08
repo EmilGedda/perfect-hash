@@ -34,9 +34,9 @@ jobs:
         chmod +x llvm-gcov.sh
         COV=gcov
         if [ "${{ matrix.cxx }}" == "clang++" ]; then
-            COV=llvm-gcov.sh
+            COV="llvm-gcov.sh --base-directory ."
         fi
-        echo Running lcov with coverage tool $COV
+        echo Running lcov with coverage tool $(echo $COV | cut -f1 -d' ')
         lcov --gcov-tool $COV --directory . --capture --output-file coverage.info
         lcov --remove coverage.info 'doctest/*' '/usr/*' "${HOME}"'/.cache/*' \
              --output-file coverage.info \
