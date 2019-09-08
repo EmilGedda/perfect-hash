@@ -37,6 +37,7 @@ jobs:
             COV=llvm-gcov
         fi
         echo Running lcov with coverage tool $COV
+        lcov --gcov-tool $COV --directory . --capture --output-file coverage.info
         lcov --remove coverage.info '/usr/*' "${HOME}"'/.cache/*' \
              --output-file coverage.info \
              --gcov-tool $COV
