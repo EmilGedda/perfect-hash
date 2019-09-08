@@ -33,7 +33,7 @@ jobs:
         echo exec llvm-cov gcov \"$@\" > llvm-gcov
         chmod +x llvm-gcov
         COV=gcov
-        if ["${{ matrix.cxx }}" = "clang++"]; then
+        if [ "${{ matrix.cxx }}" == "clang++" ]; then
             COV=llvm-gcov
         fi
         lcov --directory . --capture --output-file coverage.info
