@@ -1,0 +1,24 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Ubuntu
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        buildtype: [Debug, Release, MinSizeRel]
+        cxx: [clang++, g++]
+    
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Generate build system
+      run: CXX="${{ matrix.cxx }}" cmake -DCMAKE_BUILD_TYPE="${{ matrix.buildtype }}" .
+
+    - name: Build
+      run: cmake --build . --target tests 
+
+    - name: Test
+      run: ./tests

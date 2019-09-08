@@ -1,0 +1,23 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: macOS
+    runs-on: macOS-latest
+    strategy:
+      matrix:
+        buildtype: [Debug, Release, MinSizeRel]
+    
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Generate build system
+      run: cmake -DCMAKE_BUILD_TYPE="${{ matrix.buildtype }}" .
+
+    - name: Build
+      run: cmake --build . --target tests 
+
+    - name: Test
+      run: ./tests

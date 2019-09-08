@@ -19,7 +19,7 @@ struct counting_hash {
 TEST_CASE("unordered_map creation") {
 
   constexpr std::array<std::pair<char, int>, 5> init = { 
-    std::pair{'1', 1},
+    std::pair{'1', 1}, // AppleClang cannot deduce the init-list properly without the explicit type here.
     {'2', 2}, 
     {'3', 3},
     {'4', 4},
@@ -28,7 +28,7 @@ TEST_CASE("unordered_map creation") {
 
   constexpr auto table = perfecthash::universal::unordered_map<char, int, counting_hash, 5>(init);
 
-  for (auto& pair : init)
+  for (const auto& pair : init)
     CHECK(table[pair.first] == pair.second);
 }
 
