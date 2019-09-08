@@ -18,9 +18,12 @@ target_link_libraries(tests
   PRIVATE 
     doctest 
     $<$<STREQUAL:"${CMAKE_BUILD_TYPE}","Coverage">:gcov>
+    $<$<VERSION_LESS:"${CMAKE_VERSION}",3.13>:--coverage>
 )
 
-if("${CMAKE_BUILD_TYPE}" STREQUAL "Coverage")
-    target_compile_options(tests PRIVATE -O0 -g --coverage)
-    target_link_options(tests PRIVATE --coverage)
+if(CMAKE_BUILD_TYPE STREQUAL Coverage)
+    target_compile_options(tests PRIVATE -O0 -g -fprofile-arcs -ftest-coverage)
+    if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.13)
+        target_link_options(tests PRIVATE --coverage)
+    endif()
 endif()
