@@ -28,7 +28,7 @@ jobs:
         echo Updating apt... 
         sudo apt-get update > /dev/null
         echo Installing coverage tools...
-        sudo apt-get install lcov llvm-cov -y -qq > /dev/null
+        sudo apt-get install lcov llvm-8 -y -qq > /dev/null
         cat > llvm-gcov <<EOF
             #!/bin/bash
             exec llvm-cov gcov "$@"
