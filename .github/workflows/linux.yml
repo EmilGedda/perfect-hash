@@ -24,7 +24,6 @@ jobs:
       run: ./tests
 
     - name: Coverage
-      if: matrix.buildtype == 'Coverage'
       run: |
         echo Updating apt... 
         sudo apt-get update > /dev/null 2>&1
@@ -40,9 +39,7 @@ jobs:
         lcov --gcov-tool $COV --directory . --capture --output-file coverage.info
         lcov --remove coverage.info "${PWD}"'/doctest/*' '/usr/*' "${HOME}"'/.cache/*' --output-file coverage.info
         lcov --gcov-tool $COV --list coverage.info
-
-    - uses: codecov/codecov-action@v1.0.2
+        bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       if: matrix.buildtype == 'Coverage'
-      with:
-        token: ${{secrets.CODECOV_TOKEN}}
-        file: ./coverage.info
